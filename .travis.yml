@@ -1,0 +1,22 @@
+sudo: required
+
+services:
+- docker
+
+language: generic
+
+env:
+  global:
+  - secure: zVm7kzy74kJ/Am74Hmtv9iSERyf2bzviaj5UaU1rhlaniLkrpI6V3kWpbuAS6av7c5nrj4BabcoNvPCCBIVsi+fY94ExBPSXKhcg+Uj3b+ORJ1ixeMtBcgH0GwJ6UsyIQepCKJH6OF3+BAutARvbchxdEuXzHPr6nB+o4ONBDizxwAhBi6k3/OSvV2/OX7DmdniRmEL0sHvHD3bj2Z94iFafXrWIbzDnG5pEuBILhBGF1rp+gLUezBaeK1PfY/SqmjH/SsB/vrFE24EbckoI05Yoy8Zy9njIXSG6UOUv/KK8oHBPkvmz/0dVbBepvnVQo75rZkWfvnJK+tb2MCFvwEFcMXEhQjxuIe1TvEAwphOcedzKiyBycH+S7xEYPKG68xpSKUvaQXV22P64D2xE2EVtEsYojBP3Z68sIBZPe7wyCnnBoCzg5FZC/P8fzpiEg7RO4IDVH3O9h2Ov9tgZwDO217lDYjfzG2R/OtKI5w3mhpOE5aHdB9zuMCY1Yu0HqZrzSNxdy7BAdXwzWAsrZ/UQ3Xonr0yXmIpKGn7XSmnTc8oLf2eS0IO5bhJW5RNO4Wzy7k62KkUAf5h8F/ENjP049hPnHD5v82X7zKioodYHzmbt5lNd7fOxtwtm/IzU5AvGdPMyY0gsBMzRhgJBgb1XkSsbt64p1hvX63mF33g=
+  - secure: z8KM3XjPsU5mlQnl+mUDuV40Uqbmpq0Cf7JzpkIImhYGtDqcOCgcZWSyrvBzeCafQbq7OnbWyku5txbEO/79gpCgkhVHZRVoibxSJD43dStFyrAakBSc81rJTaKHw5hV+8ephDSHOJ+eslXrraxAjzNs4n/dmlH/TzcNmlU7Y4SS6RjLb03PSw/mz1mFRmnXdnkP9Q4XuvLdf9kWSd0ADU4jRUbPUGb/9idZi8tTGidNKgMrt4Gh+z+9AQ/cpug17l8lPlqEjoJg//6Og/rKp4O63DHP6vRPMvIcypuMXLYYgk6mtl7YPRrlhgyTr7Ccb7ZsD5My2wTEEuVtF7NdCGXzMHIFArVs3UDnKSTjNe6XySkWotQJs3FMBY9IM2T9ve1Wrbn+KL2BwvqkhJZMLaD+eCGQTbl6Wq4cDnFj7Vk4qrfX+HNgfHujfKbc0HuCLIXx/DXUYKDnaM9lIxNBKTyYw66vKJOBKW9cGT3Xg0kXebCkMsLrdGu9gEpZmDRcKCCERiwARKDgtphmLI17JvZFRcDGrE8hQ8yY2rAWnzhgMQ9lScVBK9GhJOKfhgJ0GydsSy4nZeixCNdE/KNXKzuJQ8MJ6juVMN2FF6s8RXvokTgJc7MqkO5udp0Gpb0nWh02HIDsZc+I8bBcPb5dh1my919e+ptISAf0xcitkG4=
+  - secure: YpJniE4G4MfwUHQ0eeesfRBE82YLB3l3Z0ujw5MpLh4dQaeL93oVvK+0J9k6pj5jEkfQOYm8RL6fuQLn0Rz9yU6iB8YsdhIFEK3BSsLzGQXPBCCZqyb8xV57+BD5QkiZIafRbahdu+taSEVVEVTFlLi5/irlWkChZq7D+dsK2Qqo3cBlS7zQ+U3KxbtRyLDb7CUpBtmbx9bcbnpt8eOylbFLWYuU7d8TPPPwuwsic8L8yR2pcRiCvJhDMF11AAbWDcdWuCJoCRuPaQK0b+/B6BkAyesx1Z1GacQM6aNIZjbrEdx1bM77JQxPke93aISW2ugczQBME6+562Ck+6r/SxD0YreO/F4Mdb4awHLedWxg/BAaG2k5/thl7BGJoMLpE2jmB8YTf87Z/lc/DHwkmpyQFEn91TnIKf+k1ifsMCxuzr47Jwd84KyP6vSK8DC+EPS/gNKQfU3RHVh4x2Zjr/ttBdnqS6FQssPf4EMzm9D4lLhWELtsfKJoTULuUYUYtg8n4qg6fx27iv1lRPVez+osSeTslEOmfOlD2z2/klWrwxHKrihdPtAFzulYzWAEx5k+/PQEIRIL9BxOdC4l/cMIZ9KCOLQHhXT6AOvBrCLjVaFVIHBky0HMR//tO/kpxx1u8efYBbHodeX5u3cD3s1TxZ90gIXrfS+F9HTG8WE=
+  - COMMIT=${TRAVIS_COMMIT::8}
+
+after_success:
+  - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+  - export REPO=adamcoulthard/docker-airsonos
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+  - docker build -f Dockerfile -t $REPO:$COMMIT .
+  - docker tag $REPO:$COMMIT $REPO:$TAG
+  - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
+  - docker push $REPO
