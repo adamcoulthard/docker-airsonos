@@ -7,7 +7,7 @@
 #rm /usr/bin/chfn
 #ln -s -f /bin/true /usr/bin/chfn
 
-curl -sL https://deb.nodesource.com/setup_8.x | sudo bash -
+curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
 
 apt-get -q update && apt-get install -qy \
   build-essential \
