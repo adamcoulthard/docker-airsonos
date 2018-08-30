@@ -6,6 +6,8 @@
 # We have to do this for --net=host
 #rm /usr/bin/chfn
 #ln -s -f /bin/true /usr/bin/chfn
+# With 16.04 need sudo installed
+apt-get update && apt-get install -y sudo
 
 curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
 
