@@ -1,5 +1,5 @@
 # use 12.04 precise (https://github.com/docker/docker/issues/5899)
-FROM phusion/baseimage:0.9.9
+FROM phusion/baseimage:latest
 MAINTAINER Justin Ellison <justin@techadvise.com>
 
 # Set correct environment variables.
