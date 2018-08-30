@@ -25,4 +25,4 @@ npm install -g babel@5
 cd /var/tmp/
 git clone https://github.com/adamcoulthard/airsonos
 cd airsonos
-npm install -g --unsafe-perm
+#npm install -g --unsafe-perm

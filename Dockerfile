@@ -15,9 +15,9 @@ RUN /build/prepare.sh && \
 
 # Removed for the time being to allow some testing to happen
 # Use baseimage-docker's init system
-#CMD ["/sbin/my_init"]
+CMD ["/sbin/my_init"]
 
 EXPOSE 5000 5001 5002 5003 5004 5005 5006 5006 5007 5008 5009 5010 5011 5012 5013 5014 5015
 
-#ADD init/ /etc/my_init.d/
-#ADD services/ /etc/service/
+ADD init/ /etc/my_init.d/
+ADD services/ /etc/service/
