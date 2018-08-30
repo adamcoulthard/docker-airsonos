@@ -10,8 +10,9 @@ ENV HOME /root
 ADD . /build
 
 RUN /build/prepare.sh && \
-	/build/install.sh && \
-	/build/cleanup.sh
+	/build/install.sh &&
+#	\
+#	/build/cleanup.sh
 
 # Removed for the time being to allow some testing to happen
 # Use baseimage-docker's init system
