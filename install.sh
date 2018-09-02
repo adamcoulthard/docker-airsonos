@@ -6,8 +6,10 @@
 # We have to do this for --net=host
 #rm /usr/bin/chfn
 #ln -s -f /bin/true /usr/bin/chfn
+# With 16.04 need sudo installed
+apt-get update && apt-get install -y sudo
 
-curl -sL https://deb.nodesource.com/setup | sudo bash -
+curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
 
 apt-get -q update && apt-get install -qy \
   build-essential \
@@ -25,4 +27,4 @@ npm install -g babel@5
 cd /var/tmp/
 git clone https://github.com/adamcoulthard/airsonos
 cd airsonos
-npm install -g --unsafe-perm
+#npm install -g --unsafe-perm
