@@ -27,5 +27,7 @@ npm install --global babel-cli
 cd /var/tmp/
 git clone https://github.com/adamcoulthard/airsonos
 cd airsonos
-# Temp fix is to run babel
+# Temp hack because for some reason the prepare in the oackage.json is not
+# working correclty, needs further investigation
+babel ./lib/ -d ./bin/
 npm install -g --unsafe-perm
