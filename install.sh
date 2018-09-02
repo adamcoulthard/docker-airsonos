@@ -22,9 +22,10 @@ apt-get -q update && apt-get install -qy \
 #sed -i -e "s#\#enable-dbus=yes#enable-dbus=false#g" /etc/avahi/avahi-daemon.conf
 #sed -i -e "s/^rlimit-nproc/#rlimit-nproc/g" /etc/avahi/avahi-daemon.conf
 
-npm install -g babel@5
+npm install --global babel-cli
 
 cd /var/tmp/
 git clone https://github.com/adamcoulthard/airsonos
 cd airsonos
-#npm install -g --unsafe-perm
+# Temp fix is to run babel
+npm install -g --unsafe-perm
