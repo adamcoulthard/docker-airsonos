@@ -27,5 +27,7 @@ npm install --global babel-cli
 cd /var/tmp/
 git clone https://github.com/adamcoulthard/airsonos
 cd airsonos
+# Run the prepare script because its not allowed to run when npm install has
+# arguments.
 npm run-script prepare
 npm install -g --unsafe-perm
