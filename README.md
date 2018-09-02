@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/adamcoulthard/docker-airsonos.svg?branch=master)](https://travis-ci.org/adamcoulthard/docker-airsonos)
+
 # Summary
 This is a Docker container for AirSonos.
 
@@ -16,4 +18,3 @@ sudo docker run -d --restart=always --net="host" --name="airsonos" \
 
 ## Notes on running the container
 Because the discovery mechanism uses mdns, you have to use ```--net="host"``` in order for discovery of your Sonos devices to work properly.  Since AirSonos binds to random ports between 5000 and 5050, it's best to publish them all.
-
