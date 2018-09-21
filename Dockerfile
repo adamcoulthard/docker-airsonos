@@ -1,16 +1,46 @@
-# use 12.04 precise (https://github.com/docker/docker/issues/5899)
+# Use the latest version of ubuntu
 FROM phusion/baseimage:latest
 MAINTAINER Justin Ellison <justin@techadvise.com>
 
-# Set correct environment variables.
+# Set Debian apt-get to be noninteractive
 ENV DEBIAN_FRONTEND noninteractive
-# Set correct environment variables
-ENV HOME /root
 
+# Install the required packages
+RUN apt-get update && \
+    apt-get install -y sudo && \
+		curl -sL -o /build/setup.sh https://deb.nodesource.com/setup_10.x && \
+		/build/setup.sh && \
+		apt-get -q update && \
+		apt-get install -qy build-essential ibavahi-compat-libdnssd-dev \
+		  libasound2-dev git nodejs
+
+# Add the build location and all the required files
 ADD . /build
 
-RUN /build/prepare.sh && \
-	/build/install.sh
+# Setup the node user idea that airsonos will run under
+RUN useradd -m node
+
+# Switch to the node user for further processing
+USER node
+
+# Setup the npm-global
+RUN mkdir ~/.npm-global && \
+    npm config set prefix '~/.npm-global' && \
+		echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.profile && \
+    source ~/.profile && \
+		mkdir -p /etc/my_init.d         # create phusion startup dir
+
+# Install required node packages
+RUN npm install --global babel-cli && \
+    cd /var/tmp/
+
+# Obtain airsonos, compile and install
+RUN git clone https://github.com/adamcoulthard/airsonos && \
+    cd airsonos && \
+		npm run-script prepare && \
+		npm install -g --unsafe-perm
+
+#RUN /build/install.sh
 # && \
 #	/build/cleanup.sh
 
