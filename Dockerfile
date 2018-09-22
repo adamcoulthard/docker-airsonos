@@ -19,7 +19,8 @@ RUN apt-get update && \
 		  libasound2-dev git nodejs bash
 
 # Setup the node user idea that airsonos will run under
-RUN useradd -m node
+RUN useradd -m node && \
+    adduser node sudo
 
 # Switch to the node user for further processing
 USER node
@@ -44,6 +45,9 @@ RUN cd /home/node && \
 		ls /home/node/.npm-global/bin && \
  		npm run-script prepare && \
 		npm install -g --unsafe-perm
+
+# Switch back to the root user for the final setup
+USER root
 
 # Clean up some of the files that we have been using
 RUN apt-get -y purge build-essential && \
