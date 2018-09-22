@@ -52,8 +52,7 @@ USER root
 # Clean up some of the files that we have been using
 RUN apt-get -y purge build-essential && \
     apt-get -y autoremove && \
-    apt-get clean && \
-		rm -rf /var/lib/apt/lists/* /tmp/* /home/node/airsonos
+    apt-get clean
 
 # Removed for the time being to allow some testing to happen
 # Use baseimage-docker's init system
